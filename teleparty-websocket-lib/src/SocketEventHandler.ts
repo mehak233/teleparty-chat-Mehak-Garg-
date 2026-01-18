@@ -1,4 +1,4 @@
-import { SocketMessage } from "./SocketMessage";
+import type { SocketMessage } from "./SocketMessage";
 
 export interface SocketEventHandler {
     /**

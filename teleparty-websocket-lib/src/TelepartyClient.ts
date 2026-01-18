@@ -1,15 +1,12 @@
-import { SocketMessage } from "./SocketMessage";
+import type { SocketMessage } from "./SocketMessage";
 import { SocketCallbackManager } from "./SocketCallbackManager";
-import { SocketEventHandler } from "./SocketEventHandler";
+import type { SocketEventHandler } from "./SocketEventHandler";
 import { SocketMessageTypes } from "./SocketMessageTypes";
-import { MessageList } from "./MessageList";
+import type { MessageList } from "./MessageList";
 import type { CallbackFunction } from "./CallbackFunction";
 
 
 const SOCKET_URL = "wss://uwstest.teleparty.com";
-const MAX_RECONNECT_ATTEMPTS = 10;
-const RECONNECT_INTERVAL = 1000;
-const RECONNECT_DECAY = 2;
 const MANUAL_CLOSE_CODE = 4500;
 
 export class TelepartyClient {
@@ -18,14 +15,12 @@ export class TelepartyClient {
     private _callbackManager: SocketCallbackManager;
     private _keepAliveInterval?: number;
     private _reconnectTimeOut?: number;
-    private _reconnectAttempts: number;
 
     constructor(eventHandler: SocketEventHandler) {
         this._socketEventHandler = eventHandler;
         this._socket = new WebSocket(SOCKET_URL);
         this._callbackManager = new SocketCallbackManager();
         this._handleSocketEvents();
-        this._reconnectAttempts = 0;
     }
 
     private _handleSocketEvents() {
@@ -52,12 +47,12 @@ export class TelepartyClient {
         this._socketEventHandler.onConnectionReady();
     }
 
-    private _onClose(event: CloseEvent) {
+    private _onClose(_event: CloseEvent) {
         this._socketEventHandler.onClose();
     }
 
 
-    private _onError(event: Event) {
+    private _onError(_event: Event) {
         this._socket.close();
     }
 

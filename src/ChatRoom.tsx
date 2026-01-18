@@ -15,7 +15,7 @@ type Props = {
   previousMessages?: SessionChatMessage[];
 };
 
-export default function ChatRoom({ roomId, nickname, previousMessages }: Props) {
+export default function ChatRoom({ roomId, nickname: _nickname, previousMessages }: Props) {
   const [messages, setMessages] = useState<SessionChatMessage[]>(previousMessages || []);
   const [typing, setTyping] = useState(false);
   const [text, setText] = useState("");

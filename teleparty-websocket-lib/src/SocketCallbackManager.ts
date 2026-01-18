@@ -1,4 +1,4 @@
-import { CallbackFunction } from "./"
+import type { CallbackFunction } from "./CallbackFunction";
 export class SocketCallbackManager {
     private _callbackMap: Map<string, CallbackFunction> = new Map();
 
