@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { eventHandler } from "./src/teleparty/client";
+import type { SessionChatMessage } from "teleparty-websocket-lib/src/index";
 import Home from "./Home";
 import ChatRoom from "./ChatRoom";
 
 function App() {
   const [connected, setConnected] = useState(false);
-  const [roomData, setRoomData] = useState<{ roomId: string; nickname: string } | null>(null);
+  const [roomData, setRoomData] = useState<{ roomId: string; nickname: string; previousMessages?: SessionChatMessage[] } | null>(null);
 
   useEffect(() => {
     eventHandler.onConnectionReady = () => {
@@ -30,12 +31,12 @@ function App() {
   if (!roomData) {
     return (
       <Home
-        onEnterRoom={(roomId, nickname) => setRoomData({ roomId, nickname })}
+        onEnterRoom={(roomId, nickname, previousMessages) => setRoomData({ roomId, nickname, previousMessages })}
       />
     );
   }
 
-  return <ChatRoom roomId={roomData.roomId} nickname={roomData.nickname} />;
+  return <ChatRoom roomId={roomData.roomId} nickname={roomData.nickname} previousMessages={roomData.previousMessages} />;
 }
 
 export default App;

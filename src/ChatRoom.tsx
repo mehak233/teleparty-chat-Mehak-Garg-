@@ -12,10 +12,11 @@ type TypingMessageData = {
 type Props = {
   roomId: string;
   nickname: string;
+  previousMessages?: SessionChatMessage[];
 };
 
-export default function ChatRoom({ roomId, nickname }: Props) {
-  const [messages, setMessages] = useState<SessionChatMessage[]>([]);
+export default function ChatRoom({ roomId, nickname, previousMessages }: Props) {
+  const [messages, setMessages] = useState<SessionChatMessage[]>(previousMessages || []);
   const [typing, setTyping] = useState(false);
   const [text, setText] = useState("");
 

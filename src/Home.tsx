@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { client } from "./src/teleparty/client";
+import type { SessionChatMessage } from "teleparty-websocket-lib/src/index";
 import "./Home.css";
 
 type Props = {
-  onEnterRoom: (roomId: string, nickname: string) => void;
+  onEnterRoom: (roomId: string, nickname: string, previousMessages?: SessionChatMessage[]) => void;
 };
 
 export default function Home({ onEnterRoom }: Props) {
@@ -19,8 +20,8 @@ export default function Home({ onEnterRoom }: Props) {
 
   const joinRoom = async () => {
     if (!nickname.trim() || !roomId.trim()) return;
-    await client.joinChatRoom(nickname, roomId, userIcon);
-    onEnterRoom(roomId, nickname);
+    const messageList = await client.joinChatRoom(nickname, roomId, userIcon);
+    onEnterRoom(roomId, nickname, messageList.messages);
   };
 
   return (
